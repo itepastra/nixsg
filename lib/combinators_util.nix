@@ -66,4 +66,7 @@ rec {
   # parses zero or more of some parser
   many = parser: alt (app (fmapCons parser) (many parser)) (succeed [ ]);
 
+  # parses one or more of some parser
+  some = parser: app (fmapCons parser) (many parser);
+
 }

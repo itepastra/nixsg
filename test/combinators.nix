@@ -36,6 +36,7 @@ let
     choice
     option
     many
+    some
     ;
 
   test = func: str: exp: {
@@ -299,4 +300,23 @@ in
     }
   ];
 
+  test_some_1 = test (some (symbol "a")) "aaaabaaa" [
+    {
+      parsed = chars "aaaa";
+      new = mkstrpos "aaaabaaa" 4;
+    }
+    {
+      parsed = chars "aaa";
+      new = mkstrpos "aaaabaaa" 3;
+    }
+    {
+      parsed = chars "aa";
+      new = mkstrpos "aaaabaaa" 2;
+    }
+    {
+      parsed = chars "a";
+      new = mkstrpos "aaaabaaa" 1;
+    }
+  ];
+  test_some_2 = test (some (symbol "j")) "aaaabaaa" [ ];
 }
