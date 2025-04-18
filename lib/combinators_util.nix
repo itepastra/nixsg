@@ -39,4 +39,7 @@ rec {
     else
       app (fmapCons (symbol (builtins.head symbols))) (token (builtins.tail symbols));
 
+  # same as token but takes a string
+  string = str: token (lib.strings.stringToCharacters str);
+
 }

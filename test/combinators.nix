@@ -30,6 +30,7 @@ let
     skipThen
     symbol
     token
+    string
     ;
 
   test = func: str: exp: {
@@ -170,5 +171,12 @@ in
           new = mkstrpos "foobar" 3;
         }
       ];
+
+  test_string_1 = test (string "foo") "foobar" [
+    {
+      parsed = chars "foo";
+      new = mkstrpos "foobar" 3;
+    }
+  ];
 
 }
