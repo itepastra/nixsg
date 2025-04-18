@@ -21,6 +21,7 @@ let
     satisfy
     empty
     succeed
+    alt
     ;
 
   test = func: str: exp: {
@@ -61,5 +62,29 @@ in
       new = mkstr "";
     }
   ];
+
+  test_alt_1 = test (alt (succeed "a") (satisfy (a: a == "f"))) "foo" [
+    {
+      parsed = "a";
+      new = mkstr "foo";
+    }
+    {
+      parsed = "f";
+      new = mkstrpos "foo" 1;
+    }
+  ];
+  test_alt_2 = test (alt empty anySymbol) "foo" [
+    {
+      parsed = "f";
+      new = mkstrpos "foo" 1;
+    }
+  ];
+  test_alt_3 = test (alt anySymbol empty) "foo" [
+    {
+      parsed = "f";
+      new = mkstrpos "foo" 1;
+    }
+  ];
+  test_alt_4 = test (alt empty empty) "foo" [ ];
 
 }

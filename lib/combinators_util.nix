@@ -9,6 +9,7 @@ rec {
     satisfy
     empty
     succeed
+    alt
     ;
 
 }
