@@ -60,4 +60,7 @@ rec {
   # the matches of any of the parsers will be in the result
   choice = lib.foldr alt empty;
 
+  # parses an optional element
+  option = parser: default: alt parser (succeed default);
+
 }

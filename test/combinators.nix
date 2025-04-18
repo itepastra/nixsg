@@ -34,6 +34,7 @@ let
     pack
     sequence
     choice
+    option
     ;
 
   test = func: str: exp: {
@@ -234,5 +235,22 @@ in
           new = mkstrpos "foobar" 5;
         }
       ];
+
+  test_option_1 = test (option (string "foo") (chars "hi")) "foo" [
+    {
+      parsed = chars "foo";
+      new = mkstrpos "foo" 3;
+    }
+    {
+      parsed = chars "hi";
+      new = mkstrpos "foo" 0;
+    }
+  ];
+  test_option_2 = test (option (string "foo") (chars "hi")) "bar" [
+    {
+      parsed = chars "hi";
+      new = mkstrpos "bar" 0;
+    }
+  ];
 
 }
