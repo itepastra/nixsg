@@ -71,4 +71,13 @@ rec {
 
   # takes a parser and a seperator, parses p seperated by s
   listOf = parser: seperator: app (fmapCons parser) (many (skipThen seperator parser));
+
+  # takes a parser, and a string, creates the correct structure to run it.
+  runParser =
+    parser: str:
+    parser {
+      str = lib.strings.stringToCharacters str;
+      pos = 0;
+      len = builtins.stringLength str;
+    };
 }

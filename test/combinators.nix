@@ -38,6 +38,7 @@ let
     many
     some
     listOf
+    runParser
     ;
 
   test = func: str: exp: {
@@ -320,4 +321,14 @@ in
     }
   ];
   test_some_2 = test (some (symbol "j")) "aaaabaaa" [ ];
+
+  test_runParser_1 = {
+    expr = runParser anySymbol "foo";
+    expected = [
+      {
+        parsed = "f";
+        new = mkstrpos "foo" 1;
+      }
+    ];
+  };
 }
