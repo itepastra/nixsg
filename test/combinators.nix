@@ -23,6 +23,7 @@ let
     succeed
     alt
     app
+    fmap
     ;
 
   test = func: str: exp: {
@@ -89,6 +90,23 @@ in
   test_alt_4 = test (alt empty empty) "foo" [ ];
 
   test_app_1 = test (app (succeed (a: a == "f")) anySymbol) "foo" [
+    {
+      parsed = true;
+      new = mkstrpos "foo" 1;
+    }
+  ];
+
+  test_fmap_1 = test (fmap (a: a == "f") anySymbol) "foo" [
+    {
+      parsed = true;
+      new = mkstrpos "foo" 1;
+    }
+  ];
+  test_fmap_2 = test (fmap (a: a == "f") (alt anySymbol anySymbol)) "foo" [
+    {
+      parsed = true;
+      new = mkstrpos "foo" 1;
+    }
     {
       parsed = true;
       new = mkstrpos "foo" 1;

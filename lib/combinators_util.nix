@@ -11,6 +11,7 @@ rec {
     succeed
     alt
     app
+    fmap
     ;
 
 }

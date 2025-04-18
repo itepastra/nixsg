@@ -99,4 +99,15 @@ in
       ) snd
     ) (lists.zipLists fys xzs);
 
+  # <$>
+  fmap =
+    func: p: s:
+    map (
+      { parsed, new }:
+      {
+        parsed = func parsed;
+        new = new;
+      }
+    ) (p s);
+
 }
