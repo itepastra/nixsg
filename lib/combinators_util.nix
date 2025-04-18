@@ -12,6 +12,7 @@ rec {
     alt
     app
     fmap
+    look
     ;
 
 }

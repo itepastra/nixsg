@@ -110,4 +110,16 @@ in
       }
     ) (p s);
 
+  look =
+    {
+      pos,
+      len,
+      str,
+    }@inp:
+    [
+      {
+        parsed = lists.sublist pos (len - pos) str;
+        new = inp;
+      }
+    ];
 }

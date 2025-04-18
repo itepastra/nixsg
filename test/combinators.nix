@@ -24,6 +24,7 @@ let
     alt
     app
     fmap
+    look
     ;
 
   test = func: str: exp: {
@@ -110,6 +111,13 @@ in
     {
       parsed = true;
       new = mkstrpos "foo" 1;
+    }
+  ];
+
+  test_look_1 = test look "foo" [
+    {
+      parsed = chars "foo";
+      new = mkstr "foo";
     }
   ];
 
