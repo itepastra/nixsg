@@ -24,4 +24,7 @@ rec {
   # variant of app ignoring the first parser
   skipThen = p1: p2: app (fmap (x: y: y) p1) p2;
 
+  # parse a specific symbol
+  symbol = sym: satisfy (a: a == sym);
+
 }

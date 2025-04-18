@@ -28,6 +28,7 @@ let
     fconst
     thenSkip
     skipThen
+    symbol
     ;
 
   test = func: str: exp: {
@@ -144,6 +145,13 @@ in
     {
       parsed = "a";
       new = mkstrpos "bar" 2;
+    }
+  ];
+
+  test_symbol_1 = test (symbol "f") "foo" [
+    {
+      parsed = "f";
+      new = mkstrpos "foo" 1;
     }
   ];
 
