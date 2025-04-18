@@ -19,6 +19,7 @@ let
   inherit (nlib.combinators)
     anySymbol
     satisfy
+    empty
     ;
 
   test = func: str: exp: {
@@ -43,5 +44,8 @@ in
   ];
   test_satisfy_2 = test (satisfy (a: a == "b")) "foo" [ ];
   test_satisfy_3 = test (satisfy (a: a != "b")) "" [ ];
+
+  test_empty_1 = test empty "foo" [ ];
+  test_empty_2 = test empty "" [ ];
 
 }

@@ -7,6 +7,7 @@ rec {
   inherit (core)
     anySymbol
     satisfy
+    empty
     ;
 
 }
