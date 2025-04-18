@@ -29,6 +29,7 @@ let
     thenSkip
     skipThen
     symbol
+    notSymbol
     token
     string
     pack
@@ -159,6 +160,13 @@ in
   ];
 
   test_symbol_1 = test (symbol "f") "foo" [
+    {
+      parsed = "f";
+      new = mkstrpos "foo" 1;
+    }
+  ];
+
+  test_notSymbol_1 = test (notSymbol "b") "foo" [
     {
       parsed = "f";
       new = mkstrpos "foo" 1;

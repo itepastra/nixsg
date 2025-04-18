@@ -30,6 +30,9 @@ rec {
   # parse a specific symbol
   symbol = sym: satisfy (a: a == sym);
 
+  # parse all but a specific symbol
+  notSymbol = sym: satisfy (a: a != sym);
+
   # parse a streak of symbols
   # FIXME: try to find a way without tail since it's O(n) on len(symbols)
   token =
