@@ -22,6 +22,7 @@ let
     empty
     succeed
     alt
+    app
     ;
 
   test = func: str: exp: {
@@ -86,5 +87,12 @@ in
     }
   ];
   test_alt_4 = test (alt empty empty) "foo" [ ];
+
+  test_app_1 = test (app (succeed (a: a == "f")) anySymbol) "foo" [
+    {
+      parsed = true;
+      new = mkstrpos "foo" 1;
+    }
+  ];
 
 }

@@ -10,6 +10,7 @@ rec {
     empty
     succeed
     alt
+    app
     ;
 
 }

@@ -79,4 +79,24 @@ in
     p1: p2: s:
     p1 s ++ p2 s;
 
+  # <*>
+  app =
+    p: q: xs:
+    let
+      # [ {parsed = function; new = ...} ]
+      fys = (p xs);
+      # [ [ {parsed = value; new = ...} ] ]
+      xzs = map (fy: q fy.new) fys;
+    in
+    lists.concatMap (
+      { fst, snd }:
+      map (
+        { parsed, new }:
+        {
+          parsed = fst.parsed parsed;
+          new = new;
+        }
+      ) snd
+    ) (lists.zipLists fys xzs);
+
 }
