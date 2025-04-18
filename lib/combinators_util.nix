@@ -69,4 +69,6 @@ rec {
   # parses one or more of some parser
   some = parser: app (fmapCons parser) (many parser);
 
+  # takes a parser and a seperator, parses p seperated by s
+  listOf = parser: seperator: app (fmapCons parser) (many (skipThen seperator parser));
 }

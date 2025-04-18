@@ -37,6 +37,7 @@ let
     option
     many
     some
+    listOf
     ;
 
   test = func: str: exp: {
