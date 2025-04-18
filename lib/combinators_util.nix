@@ -18,4 +18,7 @@ rec {
   # fmap ignoring the result of the parser
   fconst = value: fmap (x: value);
 
+  # variant of app ignoring the second parser
+  thenSkip = p1: p2: app (fmap (x: y: x) p1) p2;
+
 }

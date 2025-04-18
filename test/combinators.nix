@@ -26,6 +26,7 @@ let
     fmap
     look
     fconst
+    thenSkip
     ;
 
   test = func: str: exp: {
@@ -128,6 +129,13 @@ in
     {
       parsed = 3;
       new = mkstrpos "foo" 1;
+    }
+  ];
+
+  test_thenSkip_1 = test (thenSkip anySymbol anySymbol) "bar" [
+    {
+      parsed = "b";
+      new = mkstrpos "bar" 2;
     }
   ];
 
