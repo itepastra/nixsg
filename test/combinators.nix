@@ -33,6 +33,7 @@ let
     string
     pack
     sequence
+    choice
     ;
 
   test = func: str: exp: {
@@ -208,6 +209,29 @@ in
             "r"
           ];
           new = mkstrpos "foobar" 6;
+        }
+      ];
+
+  test_choice_1 =
+    test
+      (choice [
+        anySymbol
+        (string "foo")
+        (string "fooba")
+      ])
+      "foobar"
+      [
+        {
+          parsed = "f";
+          new = mkstrpos "foobar" 1;
+        }
+        {
+          parsed = chars "foo";
+          new = mkstrpos "foobar" 3;
+        }
+        {
+          parsed = chars "fooba";
+          new = mkstrpos "foobar" 5;
         }
       ];
 

@@ -56,4 +56,8 @@ rec {
     else
       app (fmapCons (builtins.head parsers)) (sequence (builtins.tail parsers));
 
+  # combines a list of parsers using choice
+  # the matches of any of the parsers will be in the result
+  choice = lib.foldr alt empty;
+
 }
