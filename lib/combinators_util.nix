@@ -48,4 +48,12 @@ rec {
     start: content: ending:
     skipThen start (thenSkip content ending);
 
+  # takes a list of parsers and runs them sequentially
+  sequence =
+    parsers:
+    if parsers == [ ] then
+      succeed [ ]
+    else
+      app (fmapCons (builtins.head parsers)) (sequence (builtins.tail parsers));
+
 }

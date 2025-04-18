@@ -32,6 +32,7 @@ let
     token
     string
     pack
+    sequence
     ;
 
   test = func: str: exp: {
@@ -186,5 +187,28 @@ in
       new = mkstrpos "foobar" 6;
     }
   ];
+
+  test_sequence_1 =
+    test
+      (sequence [
+        (symbol "f")
+        (string "oo")
+        (symbol "b")
+        anySymbol
+        anySymbol
+      ])
+      "foobar"
+      [
+        {
+          parsed = [
+            "f"
+            (chars "oo")
+            "b"
+            "a"
+            "r"
+          ];
+          new = mkstrpos "foobar" 6;
+        }
+      ];
 
 }
