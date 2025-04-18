@@ -42,4 +42,10 @@ rec {
   # same as token but takes a string
   string = str: token (lib.strings.stringToCharacters str);
 
+  # take three parser, a "start", "content" and "ending",
+  # only returns the value in "content"
+  pack =
+    start: content: ending:
+    skipThen start (thenSkip content ending);
+
 }

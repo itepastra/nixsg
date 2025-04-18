@@ -31,6 +31,7 @@ let
     symbol
     token
     string
+    pack
     ;
 
   test = func: str: exp: {
@@ -176,6 +177,13 @@ in
     {
       parsed = chars "foo";
       new = mkstrpos "foobar" 3;
+    }
+  ];
+
+  test_pack_1 = test (pack (string "foo") (anySymbol) (string "ar")) "foobar" [
+    {
+      parsed = "b";
+      new = mkstrpos "foobar" 6;
     }
   ];
 
