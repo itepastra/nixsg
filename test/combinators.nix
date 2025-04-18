@@ -29,6 +29,7 @@ let
     thenSkip
     skipThen
     symbol
+    token
     ;
 
   test = func: str: exp: {
@@ -154,5 +155,20 @@ in
       new = mkstrpos "foo" 1;
     }
   ];
+
+  test_token_1 =
+    test
+      (token [
+        "f"
+        "o"
+        "o"
+      ])
+      "foobar"
+      [
+        {
+          parsed = chars "foo";
+          new = mkstrpos "foobar" 3;
+        }
+      ];
 
 }

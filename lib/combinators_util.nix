@@ -15,6 +15,9 @@ rec {
     look
     ;
 
+  # mostly internal function to fmap the haskell (:) operator
+  fmapCons = fmap (cur: old: [ cur ] ++ old);
+
   # fmap ignoring the result of the parser
   fconst = value: fmap (x: value);
 
@@ -26,5 +29,14 @@ rec {
 
   # parse a specific symbol
   symbol = sym: satisfy (a: a == sym);
+
+  # parse a streak of symbols
+  # FIXME: try to find a way without tail since it's O(n) on len(symbols)
+  token =
+    symbols:
+    if symbols == [ ] then
+      succeed [ ]
+    else
+      app (fmapCons (symbol (builtins.head symbols))) (token (builtins.tail symbols));
 
 }
