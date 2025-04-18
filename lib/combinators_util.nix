@@ -63,4 +63,7 @@ rec {
   # parses an optional element
   option = parser: default: alt parser (succeed default);
 
+  # parses zero or more of some parser
+  many = parser: alt (app (fmapCons parser) (many parser)) (succeed [ ]);
+
 }

@@ -35,6 +35,7 @@ let
     sequence
     choice
     option
+    many
     ;
 
   test = func: str: exp: {
@@ -250,6 +251,51 @@ in
     {
       parsed = chars "hi";
       new = mkstrpos "bar" 0;
+    }
+  ];
+
+  test_many_1 = test (many (symbol "a")) "aaaabaaa" [
+    {
+      parsed = chars "aaaa";
+      new = mkstrpos "aaaabaaa" 4;
+    }
+    {
+      parsed = chars "aaa";
+      new = mkstrpos "aaaabaaa" 3;
+    }
+    {
+      parsed = chars "aa";
+      new = mkstrpos "aaaabaaa" 2;
+    }
+    {
+      parsed = chars "a";
+      new = mkstrpos "aaaabaaa" 1;
+    }
+    {
+      parsed = [ ];
+      new = mkstrpos "aaaabaaa" 0;
+    }
+  ];
+  test_many_2 = test (many (symbol "a")) "aaaa" [
+    {
+      parsed = chars "aaaa";
+      new = mkstrpos "aaaa" 4;
+    }
+    {
+      parsed = chars "aaa";
+      new = mkstrpos "aaaa" 3;
+    }
+    {
+      parsed = chars "aa";
+      new = mkstrpos "aaaa" 2;
+    }
+    {
+      parsed = chars "a";
+      new = mkstrpos "aaaa" 1;
+    }
+    {
+      parsed = [ ];
+      new = mkstrpos "aaaa" 0;
     }
   ];
 
