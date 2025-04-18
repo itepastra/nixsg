@@ -18,6 +18,7 @@ let
 
   inherit (nlib.combinators)
     anySymbol
+    satisfy
     ;
 
   test = func: str: exp: {
@@ -33,4 +34,14 @@ in
       new = mkstrpos "foo" 1;
     }
   ];
+
+  test_satisfy_1 = test (satisfy (a: a == "f")) "foo" [
+    {
+      parsed = "f";
+      new = mkstrpos "foo" 1;
+    }
+  ];
+  test_satisfy_2 = test (satisfy (a: a == "b")) "foo" [ ];
+  test_satisfy_3 = test (satisfy (a: a != "b")) "" [ ];
+
 }

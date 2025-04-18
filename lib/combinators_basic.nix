@@ -52,4 +52,16 @@ in
       ]
     else
       [ ];
+
+  satisfy =
+    predicate: s:
+    if inRange s && predicate (current s) then
+      [
+        {
+          parsed = current s;
+          new = next s;
+        }
+      ]
+    else
+      [ ];
 }
