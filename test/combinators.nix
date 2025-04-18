@@ -27,6 +27,7 @@ let
     look
     fconst
     thenSkip
+    skipThen
     ;
 
   test = func: str: exp: {
@@ -135,6 +136,13 @@ in
   test_thenSkip_1 = test (thenSkip anySymbol anySymbol) "bar" [
     {
       parsed = "b";
+      new = mkstrpos "bar" 2;
+    }
+  ];
+
+  test_skipThen_1 = test (skipThen anySymbol anySymbol) "bar" [
+    {
+      parsed = "a";
       new = mkstrpos "bar" 2;
     }
   ];
