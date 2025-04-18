@@ -8,6 +8,7 @@ rec {
     anySymbol
     satisfy
     empty
+    succeed
     ;
 
 }

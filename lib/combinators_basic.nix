@@ -67,4 +67,11 @@ in
 
   empty = s: [ ];
 
+  succeed = ret: s: [
+    {
+      parsed = ret;
+      new = s;
+    }
+  ];
+
 }

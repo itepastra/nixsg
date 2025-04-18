@@ -20,6 +20,7 @@ let
     anySymbol
     satisfy
     empty
+    succeed
     ;
 
   test = func: str: exp: {
@@ -47,5 +48,18 @@ in
 
   test_empty_1 = test empty "foo" [ ];
   test_empty_2 = test empty "" [ ];
+
+  test_succeed_1 = test (succeed "a") "foo" [
+    {
+      parsed = "a";
+      new = mkstr "foo";
+    }
+  ];
+  test_succeed_2 = test (succeed "b") "" [
+    {
+      parsed = "b";
+      new = mkstr "";
+    }
+  ];
 
 }
