@@ -29,4 +29,5 @@ let
       pkgs.runCommand "nix-flake-tests-${name}-success" { } "echo > $out";
 in
 {
+  combinatorsCore = runtests "combinatorsCore" (import ./combinators.nix { inherit nlib pkgs; });
 }
