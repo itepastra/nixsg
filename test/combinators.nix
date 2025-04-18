@@ -25,6 +25,7 @@ let
     app
     fmap
     look
+    fconst
     ;
 
   test = func: str: exp: {
@@ -118,6 +119,15 @@ in
     {
       parsed = chars "foo";
       new = mkstr "foo";
+    }
+  ];
+
+  # Combinator utils
+
+  test_fconst_1 = test (fconst 3 anySymbol) "foo" [
+    {
+      parsed = 3;
+      new = mkstrpos "foo" 1;
     }
   ];
 

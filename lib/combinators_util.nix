@@ -15,4 +15,7 @@ rec {
     look
     ;
 
+  # fmap ignoring the result of the parser
+  fconst = value: fmap (x: value);
+
 }
