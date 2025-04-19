@@ -110,6 +110,16 @@ in
       }
     ) (p s);
 
+  filter =
+    predicate: parser: str:
+    builtins.filter (
+      {
+        parsed,
+        ...
+      }:
+      predicate parsed
+    ) (parser str);
+
   look =
     {
       pos,

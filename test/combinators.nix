@@ -38,6 +38,7 @@ let
     option
     many
     some
+    upTo
     listOf
     runParser
     ;
@@ -330,13 +331,38 @@ in
   ];
   test_some_2 = test (some (symbol "j")) "aaaabaaa" [ ];
 
+  test_upTo_1 = test (upTo anySymbol 3) "foobar" [
+    {
+      parsed = chars "foo";
+      new = mkstrpos "foobar" 3;
+    }
+    {
+      parsed = chars "fo";
+      new = mkstrpos "foobar" 2;
+    }
+    {
+      parsed = chars "f";
+      new = mkstrpos "foobar" 1;
+    }
+    {
+      parsed = chars "";
+      new = mkstrpos "foobar" 0;
+    }
+  ];
+
   test_runParser_1 = {
     expr = runParser anySymbol "foo";
     expected = [
-      {
-        parsed = "f";
-        new = mkstrpos "foo" 1;
-      }
+      "f"
+    ];
+  };
+  test_runParser_2 = {
+    expr = runParser (many anySymbol) "foo";
+    expected = [
+      (chars "foo")
+      (chars "fo")
+      (chars "f")
+      [ ]
     ];
   };
 }

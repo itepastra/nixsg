@@ -10,4 +10,8 @@ rec {
     inherit lib;
     core = combinatorsCore;
   };
+
+  markdown = import ./markdown.nix {
+    inherit lib combinators;
+  };
 }

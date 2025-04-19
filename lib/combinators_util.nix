@@ -12,11 +12,15 @@ rec {
     alt
     app
     fmap
+    filter
     look
     ;
 
   # mostly internal function to fmap the haskell (:) operator
   fmapCons = fmap (cur: old: [ cur ] ++ old);
+
+  # mostly internal function to fmap the haskell `flip (:)` operator
+  fmapConsReverse = fmap (cur: old: old ++ [ cur ]);
 
   # fmap ignoring the result of the parser
   fconst = value: fmap (x: value);
@@ -69,8 +73,19 @@ rec {
   # parses zero or more of some parser
   many = parser: alt (app (fmapCons parser) (many parser)) (succeed [ ]);
 
+  # parses zero or more of some parser, with the shortest at the start;
+  manyLazy = parser: s: lib.lists.reverseList (many parser s);
+
   # parses one or more of some parser
   some = parser: app (fmapCons parser) (many parser);
+
+  # parses one or more of some parser, shortest at the start
+  someLazy = parser: s: lib.lists.reverseList (some parser s);
+
+  # parses zero up to num of some parser
+  upTo =
+    parser: num:
+    if num == 0 then succeed [ ] else alt (app (fmapCons parser) (upTo parser (num - 1))) (succeed [ ]);
 
   # takes a parser and a seperator, parses p seperated by s
   listOf = parser: seperator: app (fmapCons parser) (many (skipThen seperator parser));
@@ -78,9 +93,9 @@ rec {
   # takes a parser, and a string, creates the correct structure to run it.
   runParser =
     parser: str:
-    parser {
+    (options: map (builtins.getAttr "parsed") options) (parser {
       str = lib.strings.stringToCharacters str;
       pos = 0;
       len = builtins.stringLength str;
-    };
+    });
 }
