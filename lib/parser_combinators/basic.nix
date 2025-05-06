@@ -99,6 +99,11 @@ in
       ) snd
     ) (lists.zipLists fys xzs);
 
+  # >>=
+  bind =
+    p: f: s:
+    lists.concatMap (fy: (f fy.parsed) fy.new) (p s);
+
   # <$>
   fmap =
     func: p: s:
@@ -120,6 +125,14 @@ in
       predicate parsed
     ) (parser str);
 
+  # <<|>
+  biased =
+    p: q: s:
+    let
+      r = p s;
+    in
+    if r == [ ] then q s else r;
+
   look =
     {
       pos,
@@ -132,4 +145,5 @@ in
         new = inp;
       }
     ];
+
 }

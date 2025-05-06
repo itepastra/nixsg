@@ -5,13 +5,11 @@ let
   lib = pkgs.lib;
 in
 rec {
-  combinatorsCore = import ./combinators_basic.nix { inherit lib; };
-  combinators = import ./combinators_util.nix {
+  combinators = import ./parser_combinators {
     inherit lib;
-    core = combinatorsCore;
   };
 
-  markdown = import ./markdown.nix {
+  markdown = import ./markdown {
     inherit lib combinators;
   };
 }

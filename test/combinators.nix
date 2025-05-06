@@ -25,6 +25,7 @@ let
     app
     fmap
     look
+    biased
     fconst
     thenSkip
     skipThen
@@ -41,10 +42,11 @@ let
     upTo
     listOf
     runParser
+    greedy
     ;
 
   test = func: str: exp: {
-    expr = pkgs.lib.traceValSeq (func (mkstr str));
+    expr = func (mkstr str);
     expected = exp;
   };
 in
@@ -134,6 +136,19 @@ in
     {
       parsed = chars "foo";
       new = mkstr "foo";
+    }
+  ];
+
+  test_biased_1 = test (biased (symbol "f") anySymbol) "foo" [
+    {
+      parsed = "f";
+      new = mkstrpos "foo" 1;
+    }
+  ];
+  test_biased_2 = test (biased (symbol "b") anySymbol) "foo" [
+    {
+      parsed = "f";
+      new = mkstrpos "foo" 1;
     }
   ];
 
@@ -349,6 +364,20 @@ in
       new = mkstrpos "foobar" 0;
     }
   ];
+  test_upTo_2 = test (upTo anySymbol 4) "hi" [
+    {
+      parsed = chars "hi";
+      new = mkstrpos "hi" 2;
+    }
+    {
+      parsed = chars "h";
+      new = mkstrpos "hi" 1;
+    }
+    {
+      parsed = chars "";
+      new = mkstrpos "hi" 0;
+    }
+  ];
 
   test_runParser_1 = {
     expr = runParser anySymbol "foo";
@@ -359,10 +388,18 @@ in
   test_runParser_2 = {
     expr = runParser (many anySymbol) "foo";
     expected = [
+      (chars "foo\n")
       (chars "foo")
       (chars "fo")
       (chars "f")
       [ ]
     ];
   };
+
+  test_greedy_1 = test (greedy (notSymbol "r")) "foor" [
+    {
+      parsed = chars "foo";
+      new = mkstrpos "foor" 3;
+    }
+  ];
 }

@@ -14,6 +14,8 @@ rec {
     fmap
     filter
     look
+    biased
+    bind
     ;
 
   # mostly internal function to fmap the haskell (:) operator
@@ -94,8 +96,23 @@ rec {
   runParser =
     parser: str:
     (options: map (builtins.getAttr "parsed") options) (parser {
-      str = lib.strings.stringToCharacters str;
+      str = lib.strings.stringToCharacters "${str}\n";
       pos = 0;
-      len = builtins.stringLength str;
+      len = builtins.stringLength "${str}\n";
     });
+
+  greedy = parser: biased (app (fmapCons parser) (greedy parser)) (succeed [ ]);
+  greedy1 = parser: app (fmapCons parser) (greedy parser);
+
+  greed =
+    parser: s:
+    let
+      ps = parser s;
+    in
+    if ps != [ ] then
+      [
+        (lib.head ps)
+      ]
+    else
+      [ ];
 }
