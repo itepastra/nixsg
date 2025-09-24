@@ -15,21 +15,28 @@
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
     in
     rec {
-      lib = forAllSystems (
+      packages = forAllSystems (
         system:
         let
           pkgs = nixpkgsFor.${system};
         in
-        import ./lib { inherit pkgs; }
+        rec {
+          default = md-to-html;
+          md-to-html = pkgs.python3Packages.buildPythonApplication {
+            name = "md-to-html-0.0.1";
+            format = "pyproject";
+            src = ./parse;
+            nativeBuildInputs = with pkgs.python3.pkgs; [ setuptools ];
+            propagatedBuildInputs = with pkgs.python3.pkgs; [
+              jinja2
+              markdown
+            ];
+          };
+        }
       );
 
-      checks = forAllSystems (
-        system:
-        let
-          nlib = lib.${system};
-          pkgs = nixpkgsFor.${system};
-        in
-        (import ./test { inherit nlib pkgs; })
-      );
+      nixosModules = {
+        nginxSite = import ./nginx.nix;
+      };
     };
 }

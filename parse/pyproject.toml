@@ -1,0 +1,11 @@
+[project]
+name = "md-to-html"
+version = "0.0.1"
+dependencies = ["jinja2", "markdown"]
+
+[project.scripts]
+md-to-html = "convert:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
